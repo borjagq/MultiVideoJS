@@ -1,0 +1,501 @@
+.MV-player {
+    height: 450px;
+    width: 800px;
+    background-color: #000;
+    position: relative;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.MV-player * {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+}
+
+.MV-player .MV-buffering, .MV-metadata {
+    display: none;
+}
+
+.MV-player .MV-vjs {
+    
+}
+
+.MV-player iframe,
+.MV-player video,
+.MV-player > * {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.MV-player .controls-layer {
+    z-index: 10;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+.MV-player .controls-layer * {
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.MV-player:not(.MV-poster) .controls-layer { /*:not(.MV-poster)*/
+    background-image: none !important;
+}
+
+.MV-player .controls-layer .loading {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 20px;
+    width: 110px;
+    margin: auto;
+}
+
+.MV-player .controls-layer .loading span {
+    background-color: #fff;
+    height: 20px;
+    width: 20px;
+    transform: scale(0);
+    opacity: 0;
+    display: inline-block;
+    border-radius: 100%;
+    -moz-animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -moz-animation-name: load_anim;
+    -webkit-animation-name: load_anim;
+    animation-name: load_anim;
+    -moz-animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-transition: all 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition:         all 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.MV-player .controls-layer .loading span:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.MV-player .controls-layer .loading span:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.MV-player .controls-layer .loading span:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.MV-player .controls-layer .loading span:not(:last-child) {
+    margin-right: 10px;
+}
+
+.MV-player.MV-loading .controls-layer .loading {
+    display: block;
+}
+
+.MV-player .controls-layer .play-replay {
+    display: none;
+    background: transparent;
+    border: none;
+}
+
+.MV-player.MV-poster .controls-layer .play-replay {
+    display: block;
+    font-family: "Fontawesome";
+    color: #fff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 90px;
+    height: 90px;
+    margin: auto;
+    text-align: center;
+    font-size: 50px;
+    background-color: #a80c19;
+    box-shadow: 0 0 10px #333;
+    border-radius: 100%;
+    outline: none;
+    transition: width 0.2s, height 0.2s, font-size 0.2s, color 0.2s, transform 0.3s;
+}
+
+.MV-player.MV-loading .controls-layer .play-replay {
+    display: none;
+}
+
+.MV-player.MV-poster .controls-layer .play-replay:hover {
+    /*background-color: #a80c19;
+    width: 95px;
+    height: 95px;*/
+    transform: scale(1.06);
+}
+
+.MV-player .controls-layer .play-replay::before {
+    content: '\f04b';
+    margin-right: -7px;
+}
+
+.MV-player.MV-replay .controls-layer .play-replay::before {
+    content: '\f01e';
+    margin: 0;
+}
+
+.MV-player .controls-layer .controls-panel {
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    color: #fff;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px;
+    background: rgba(0,0,0,0);
+    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0)), color-stop(100%, rgba(0,0,0,0.6)));
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+    background: -o-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+    background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
+    align-items: center;
+    justify-content: space-between;
+}
+
+.MV-player .controls-layer .controls-panel > * {
+    flex-shrink: 0;
+}
+
+.MV-player .controls-layer .controls-panel > *:not(:last-child):not(.extra-control),
+.MV-player .controls-layer .controls-panel .extra-control > * {
+    margin-right: 15px;
+}
+
+.MV-player .controls-layer .controls-panel .volume-mute > *:not(:last-child) {
+    margin-right: 20px;
+}
+
+.MV-player .controls-layer .controls-panel button,
+.MV-player .controls-layer .controls-panel .button {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    font-size: 20px;
+    font-family: "Fontawesome";
+    width: 20px;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+
+.MV-player .controls-layer .controls-panel input[type=checkbox] {
+    display: none;
+}
+
+.MV-player .controls-layer .controls-panel .play-pause::after {
+    content: '\f04c';
+}
+
+.MV-player.MV-paused .controls-layer .controls-panel .play-pause::after {
+    content: '\f04b';
+}
+
+.MV-player .controls-layer .inline-icon {
+    height: 100%;
+    width: 30px;
+}
+
+.MV-player .controls-layer .inline-icon::after {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.MV-player .controls-layer .controls-panel .speed::after {
+    height: 21px;
+    width: 21px;
+    display: block;
+    content: "";
+    background-image: url(resources/speed.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.MV-player[data-speed=slow] .controls-layer .controls-panel .speed::after,
+span.slow::after {
+    content: "";
+    background-image: url(resources/slow.svg);
+}
+
+.MV-player[data-speed=fast] .controls-layer .controls-panel .speed::after,
+span.fast::after {
+    content: "";
+    background-image: url(resources/fast.svg);
+}
+
+.MV-player .controls-layer .controls-panel .speed .sub-control > *:not(:last-child) {
+    margin-right: 8px;
+}
+
+.MV-player .controls-layer .controls-panel .zoom .sub-control {
+    width: auto;
+    height: auto;
+}
+
+.MV-player .controls-panel label.button.zoom > input[type=checkbox]:checked + .sub-control {
+    display: block;
+}
+
+.MV-player .controls-layer .controls-panel .zoom::after {
+    content: "\f002";
+}
+
+.MV-player .controls-layer .controls-panel .zoom .sub-control button {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.MV-player .controls-layer .controls-panel .zoom .sub-control button::after {
+    font-family: Fontawesome;
+}
+
+button.zoom-in::after {
+    content: "\f00e";
+}
+
+button.zoom-out::after {
+    content: "\f010";
+}
+
+button.zoom-up::after {
+    content: "\f062";
+}
+
+button.zoom-down::after {
+    content: "\f063";
+}
+
+button.zoom-right::after {
+    content: "\f061";
+}
+
+button.zoom-left::after {
+    content: "\f060";
+}
+
+.MV-player .controls-layer .controls-panel .volume-mute {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 20px;
+    overflow: hidden;
+    transition: width 0.5s;
+}
+
+.MV-player .controls-layer .controls-panel .volume-mute:hover,
+.MV-player .controls-layer .controls-panel .volume-mute.fixed {
+    width: 120px;
+}
+
+.MV-player .controls-layer .controls-panel .volume-mute > * {
+    flex-shrink: 0;
+}
+
+.MV-player .controls-layer .controls-panel .volume-mute .volume {
+    flex-shrink: 1;
+    width: 80px;
+    margin-right: 9px;
+}
+
+.MV-player .controls-layer .controls-panel .volume-mute .volume .main {
+    width: 100%;
+}
+
+.MV-player.MV-muted .controls-layer .controls-panel .volume-mute .volume .main {
+    width: 0 !important;
+}
+
+.MV-player .controls-layer .controls-panel .mute::after {
+    content: '\f028';
+}
+
+.MV-player.MV-muted .controls-layer .controls-panel .mute::after {
+    content: '\f026';
+}
+
+.MV-player .controls-layer .slider {
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 6px;
+    width: 100%;
+    flex-shrink: 1;
+    position: relative;
+}
+
+.MV-player .controls-layer .slider .fraction {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    max-width: 100%;
+}
+
+.MV-player .controls-layer .slider .fraction.main {
+    background-color: #a80c19;
+    z-index: 10;
+    transition: width 0;
+}
+
+.MV-player .controls-layer .slider .fraction.main > span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 100%;
+    box-shadow: 0 0 5px #888888;
+    height: 18px;
+    width: 18px;
+    right: -9px;
+}
+
+.MV-player .controls-layer .slider .fraction.main > span:hover {
+    background-color: #ddd;
+}
+
+.MV-player .controls-layer .slider .fraction.back {
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 75%;
+}
+
+.MV-player.MV-controls .controls-layer {
+    cursor: none;
+}
+
+.MV-player.MV-controls.MV-controls-active .controls-layer {
+    cursor: default;
+}
+
+.MV-player.MV-controls.MV-controls-active .controls-layer .controls-panel,
+.MV-player.MV-controls.MV-controls-always .controls-layer .controls-panel,
+.MV-player.MV-paused.MV-controls .controls-layer .controls-panel {
+    display: flex;
+}
+
+.MV-player .vjs-loading-spinner {
+    display: none !important;
+}
+
+/*was here*/
+
+.MV-player.MV-fixed-controls {
+    padding-bottom: 41px;
+}
+
+.MV-player.MV-fixed-controls > * {
+    margin-bottom: 0;
+    margin-top: 0;
+    bottom: 41px;
+    height: calc(100% - 41px);
+}
+
+.MV-player.MV-fixed-controls .controls-layer .controls-panel {
+    display: flex;
+    transform: translateY(0);
+    bottom: -41px;
+    background-color: #484848;
+}
+
+@supports ( transform: translateY(41px) ) {
+
+    .MV-player .controls-layer .controls-panel {
+        display: flex;
+        transition: transform 0.1s;
+        transform: translateY(41px);
+    }
+
+    .MV-player.MV-controls.MV-controls-active .controls-layer .controls-panel,
+    .MV-player.MV-controls.MV-controls-always .controls-layer .controls-panel,
+    .MV-player.MV-paused.MV-controls .controls-layer .controls-panel {
+        transform: translateY(0);
+    }
+
+}
+
+.MV-player .controls-panel .extra-control > button {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.MV-player .controls-panel .extra-control > button:last-child {
+    margin-right: 0;
+}
+
+.MV-player.MV-slider-hide .controls-panel .current-time {
+    background: transparent !important;
+    pointer-events: none;
+    height: 0;
+}
+
+.MV-player.MV-slider-hide .controls-panel .current-time > * {
+    display: none;
+}
+
+.MV-player .controls-panel .sub-control {
+    position: absolute;
+    background-color: rgba(33, 33, 33, 0.6);;
+    width: 170px;
+    height: 30px;
+    bottom: 110%;
+    right: 10px;
+    padding: 5px 15px;
+    align-items: center;
+    display: none;
+}
+
+.MV-player .controls-panel label.button > input[type=checkbox]:checked + .sub-control {
+    display: flex;
+}
+
+
+.MV-player .controls-panel .sub-control > button:not(:nth-of-type(3n)) {
+    margin-right: 15px;
+}
+
+@keyframes load_anim {
+
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+}

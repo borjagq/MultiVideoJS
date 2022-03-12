@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="include/video.js"></script>
+		<script src="include/Youtube.js"></script>
+		<script src="../src/MultiVideo.js"></script>
+		<script>
+			var tag = document.createElement('script');
+			tag.src = "https://www.youtube.com/iframe_api";
+			var firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		</script>
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<link href="../src/MultiVideo.css" rel="stylesheet">
+	</head>
+	<body onload="load();">
+		<div id='myDiv'></div>
+		<script>
+
+			var myP;
+
+			function load() {
+
+				myP = $('#myDiv').MultiVideoJS({sources: [{type: "video/youtube", src: "https://youtu.be/E9jrQSpMxes", ini: 200, end: 210}, {type: "video/youtube", src: "https://youtu.be/YPWcs2odleA", ini: 60, end: 70}], poster: 'url("https://images.unsplash.com/photo-1429277096327-11ee3b761c93?crop=entropy&dpr=2&fit=crop&fm=jpg&h=800&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1350")', width: 800});
+
+			};
+
+		</script>
+	</body>
+</html>
